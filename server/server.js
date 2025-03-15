@@ -1,30 +1,26 @@
-import 'dotenv/config'
-import express from 'express'
-import cors from 'cors'
-import connectDB from './configs/mongodb.js'
-import userRouter from './routes/userRoutes.js'
+import "dotenv/config";
+import express from "express";
+import cors from "cors";
+import connectDB from "./configs/mongodb.js";
+import userRouter from "./routes/userRoutes.js";
 
-// express initialization
-const app = express()
+// Express initialization
+const app = express();
 
-// database connection
-connectDB()
+// Database connection
+connectDB();
 
+// Middleware initialization
+app.use(express.json()); // Default JSON parser for most routes
+app.use(cors());
 
-// middleware initialization
-app.use(express.json())
-app.use(cors())
+// Raw body parser for Clerk webhooks to ensure signature verification works
+app.use("/api/user/webhooks", express.raw({ type: "application/json" }));
 
+// API routes
+app.get("/", (req, res) => res.send("API Working"));
+app.use("/api/user", userRouter);
 
-// api routes
-app.get('/', (req, res) => res.send('API Working'))
-app.use('/api/user',userRouter)
-
-
-
-
-
-
-// port initialization
-const port = process.env.PORT || 3000
-app.listen(port, () => console.log(`Server running on port ${port}`));
+// Port initialization
+const port = process.env.PORT || 3000;
+app.listen(port, () => console.log(`🚀 Server running on port ${port}`));

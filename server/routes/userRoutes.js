@@ -1,9 +1,9 @@
-import { clerkWebhooks } from "../controllers/userControllers.js"
-import express from 'express'
+import { clerkWebhooks } from "../controllers/userControllers.js";
+import express from "express";
 
-const userRouter = express.Router()
+const userRouter = express.Router();
 
-userRouter.post('/webhooks',clerkWebhooks)
-
+// Webhook route (Clerk webhooks)
+userRouter.post("/webhooks", clerkWebhooks);
 
 export default userRouter;
