@@ -9,7 +9,7 @@ const clerkWebhooks = async (req, res) => {
     console.log("🔹 Webhook received:", payload);
 
     // Webhook verification
-    const whook = new Webhook(process.env.WEBHOOK_SECRET);
+    const whook = new Webhook(process.env.CLERK_WEBHOOK_SECRET);
 
     try {
       whook.verify(payload, {
