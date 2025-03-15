@@ -29,4 +29,8 @@ input[type="range"] {
     background-size: contain;
     cursor: pointer;
   }
+
+  .bg-layer{
+    background-image: url('/bg_layer.png');
+  }
   
