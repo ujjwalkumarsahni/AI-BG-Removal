@@ -3,7 +3,7 @@ import { assets } from '../assets/assets'
 
 const Header = () => {
     return (
-        <div className='flex justify-between items-center mx-sm:flex-col-reverse gap-y-10 px-4 mt-10 lg:px-44 sm:mt-20'>
+        <div className='flex flex-col-reverse sm:flex-row justify-between items-center gap-y-10 px-4 mt-10 lg:px-44 sm:mt-20'>
 
             {/* left side */}
             <div>
