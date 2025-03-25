@@ -1,8 +1,10 @@
 import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
-import connectDB from './configs/mongodb.js';
-import userRouter from './routes/userRoutes.js';
+import cookieParser from "cookie-parser";
+import connectDB from './config/mongodb.js'
+import userRouter from './routes/userRouter.js';
+import authRouter from './routes/authRouter.js';
 
 // Express initialization
 const app = express();
@@ -14,16 +16,19 @@ connectDB().catch(err => {
 });
 
 // Middleware initialization
-app.use('/api/user/webhooks', express.raw({ type: 'application/json' })); // Raw body for webhooks
+app.use(cookieParser());
 app.use(express.json());
-app.use(cors({
-    origin: process.env.FRONTEND_URL || '*',
-    credentials: true,
-}));
+app.use(
+    cors({
+      origin: "http://localhost:5173", // Frontend URL
+      credentials: true, // Allow cookies and authentication headers
+    })
+  );
 
 // API routes
 app.get('/', (req, res) => res.send('API Working'));
-app.use('/api/user', userRouter);
+app.use('/api/auth',authRouter)
+app.use('/api/user',userRouter)
 
 // Port initialization
 const port = process.env.PORT || 3000;
