@@ -3,8 +3,8 @@ import { assets } from "../assets/assets";
 
 const Result = () => {
   return (
-    <div className="min-h-[75vh] flex items-center justify-center bg-gray-100 px-4">
-      <div className="bg-white rounded-lg px-8 py-6 drop-shadow-sm max-w-4xl w-full">
+    <div className="mx-4 my-3 lg:mx-44 mt-20 min-h-[100vh]">
+      <div className="bg-white rounded-lg px-8 py-6 drop-shadow-sm h-[100%]">
         
         {/* Image Sections */}
         <div className="flex flex-col sm:grid grid-cols-2 gap-8">
