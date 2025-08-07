@@ -2,9 +2,7 @@ import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
 import connectDB from './config/mongodb.js';
-// import cookieParser from "cookie-parser";
-// import userRouter from './routes/userRouter.js';
-// import authRouter from './routes/authRouter.js';
+import userRouter from './routes/userRoutes.js';
 
 // Express initialization
 const app = express();
@@ -27,8 +25,8 @@ app.use(
 
 // API routes
 app.get('/', (req, res) => res.send('API Working fine'));
+app.use('/api/user',userRouter)
 // app.use('/api/auth',authRouter)
-// app.use('/api/user',userRouter)
 
 // Port initialization
 const port = process.env.PORT || 3000;
