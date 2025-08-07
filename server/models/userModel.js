@@ -1,15 +1,12 @@
 import mongoose from "mongoose";
 
 const userSchema = mongoose.Schema({
-    name: { type: String, required: true },
+    clerkId: { type: String, required: true, unique: true },
     email: { type: String, required: true, unique: true },
-    password: { type: String, required: true },
-    verifyOtp: { type: String, default: '' },
-    verifyOtpExpireAt: { type: Number, default: 0 },
-    isAccountVerified: { type: Boolean, default: false },
-    resetOtp: { type: String, default: '' },
-    resetOtpExpireAt: { type: Number, default: 0 },
-
+    photo: { type: String, required: true},
+    firstName: { type: String},
+    lastName: { type: String},
+    creditBalance: { type: Number, default: 5},
 })
 
 const userModel = mongoose.models.user || mongoose.model('user', userSchema);
