@@ -1,53 +1,75 @@
+import { useAuth, useClerk, useUser } from "@clerk/clerk-react";
 import axios from "axios";
-import { createContext, useEffect, useState } from "react";
+import { createContext, useState } from "react";
 import { toast } from "react-toastify";
-
+import {useNavigate} from 'react-router-dom'
 export const AppContext = createContext();
 
-export const AppContextProvider = (props) => {
+const AppContextProvider = (props) => {
 
     const backendUrl = import.meta.env.VITE_BACKEND_URL;
-    const [isLoggedin, setIsLoggedin] = useState(false);
-    const [userData, setUserData] = useState(false);
+    const navigate = useNavigate()
+    const [credit, setCredit] = useState(false);
+    const [image, setImage] = useState(false);
+    const [resultImage, setResultImage] = useState(false);
 
-    // Send cookies with every request
-    axios.defaults.withCredentials = true;
+    const {getToken} = useAuth()
+    const {isSignedIn} = useUser()
+    const {openSignIn} = useClerk()
 
-    const getAuthState = async () => {
+    const loadCreditsData = async () =>{
         try {
-            const { data } = await axios.get(`${backendUrl}/api/auth/is-auth`);
-            if(data.success){
-                setIsLoggedin(true);
-                getUserData();
-            }
-        } catch (error) {
-            toast.error(error.message);
-        }
-    }    
+            const token = await getToken()
+            const {data} = await axios.get(backendUrl+'api/user/credits',{headers: {token}})
 
-    const getUserData = async () => {
-        try {
-            const { data } = await axios.get(`${backendUrl}/api/user/data`);
             if(data.success){
-                setUserData(data.userData);
+                setCredit(data.credits)
+                console.log(data.credits)
             }
-            else{
-                toast.error(data.message);
-            }
-            
+
         } catch (error) {
-            toast.error(error.message);
+            toast.error(error.message)
         }
     }
 
-    useEffect(() => {
-        getAuthState();
-    }, []);
+    const removeBg = async (image) =>{
+        try {
+            if(!isSignedIn){
+                return openSignIn()
+            }
+            setImage(image);
+            setResultImage(false)
+
+            navigate('/result')
+
+            const token = await getToken()
+            const formData = new FormData()
+            image && formData.append('image',image)
+
+            const url = `${backendUrl.replace(/\/+$/, '')}/api/image/remove-bg`;
+            console.log("Calling remove-bg:", url);
+
+            const {data} = await axios.post(`${backendUrl.replace(/\/+$/, '')}/api/image/remove-bg`,formData, {headers: {token}})
+
+            if(data.success){
+                setResultImage(data.resultImage)
+                data.creditBalance && setCredit(data.creditBalance)
+            } else{
+                toast.error(data.message)
+                data.creditBalance && setCredit(data.creditBalance)
+                if(data.creditBalance === 0){
+                    navigate('/buy')
+                }
+            }
+            
+        } catch (error) {
+            toast.error(error.message)
+        }
+    }
+
 
     const value = {
-        backendUrl,
-        isLoggedin,setIsLoggedin,
-        userData,setUserData,getUserData
+       credit, setCredit, loadCreditsData, backendUrl, image, setImage, removeBg,resultImage, setResultImage
     }
 
     return (
@@ -57,4 +79,4 @@ export const AppContextProvider = (props) => {
     );
 }
 
-export default AppContext;
+export default AppContextProvider;

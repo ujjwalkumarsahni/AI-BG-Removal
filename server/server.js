@@ -3,6 +3,7 @@ import express from 'express';
 import cors from 'cors';
 import connectDB from './config/mongodb.js';
 import userRouter from './routes/userRoutes.js';
+import imageRouter from './routes/imageRoutes.js';
 
 // Express initialization
 const app = express();
@@ -26,7 +27,7 @@ app.use(
 // API routes
 app.get('/', (req, res) => res.send('API Working fine'));
 app.use('/api/user',userRouter)
-// app.use('/api/auth',authRouter)
+app.use('/api/image',imageRouter)
 
 // Port initialization
 const port = process.env.PORT || 3000;
