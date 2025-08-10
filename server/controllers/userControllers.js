@@ -1,6 +1,7 @@
 import { Webhook } from "svix";
 import userModel from "../models/userModel.js";
 // import razorpay from 'razorpay'
+
 // api/user/webhooks
 const clerkWebhook = async (req, res) => {
     try {
@@ -81,4 +82,4 @@ const clerkWebhook = async (req, res) => {
 // })
 
 
-export { clerkWebhook, userCredits };
+export { clerkWebhook };
