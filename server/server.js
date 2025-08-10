@@ -1,34 +1,26 @@
 import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
-import connectDB from './config/mongodb.js';
-import userRouter from './routes/userRoutes.js';
-import imageRouter from './routes/imageRoutes.js';
+import connectDB from './configs/mongodb.js';
 
-// Express initialization
+// App configuration
+const port = process.env.PORT || 3000;
 const app = express();
 
-// Database connection with error handling
-connectDB().catch(err => {
-    console.error("Database connection failed:", err);
-    process.exit(1);
-});
+// connect to MongoDB
+await connectDB();
 
-// Middleware initialization
-// app.use(cookieParser());
+
+// Middleware
 app.use(express.json());
-app.use(
-    cors({
-      origin: "http://localhost:5173", // Frontend URL
-      credentials: true, // Allow cookies and authentication headers
-    })
-  );
+app.use(cors());
 
-// API routes
-app.get('/', (req, res) => res.send('API Working fine'));
-app.use('/api/user',userRouter)
-app.use('/api/image',imageRouter)
 
-// Port initialization
-const port = process.env.PORT || 3000;
-app.listen(port, () => console.log(`Server running on http://localhost:${port}`));
+// Routes
+app.get('/', (req, res) => res.send('API working!'));
+
+// Start the server
+app.listen(port, () => console.log(`Server is running on port ${port}`));
+
+
+

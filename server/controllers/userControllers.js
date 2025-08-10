@@ -1,6 +1,6 @@
-import userModel from "../models/userModel.js";
 import { Webhook } from "svix";
-import razorpay from 'razorpay'
+import userModel from "../models/userModel.js";
+// import razorpay from 'razorpay'
 // api/user/webhooks
 const clerkWebhook = async (req, res) => {
     try {
@@ -62,23 +62,23 @@ const clerkWebhook = async (req, res) => {
 
 
 // API controller function to get user available credit data
-const userCredits = async (req, res) => {
-    try {
-        const { clerkId } = req.body
+// const userCredits = async (req, res) => {
+//     try {
+//         const { clerkId } = req.body
 
-        const userData = await userModel.findOne({ clerkId })
+//         const userData = await userModel.findOne({ clerkId })
 
-        res.json({ success: true, credits: userData.creditBalance })
+//         res.json({ success: true, credits: userData.creditBalance })
 
-    } catch (error) {
-        console.log(error.message);
-        res.json({ success: false, message: error.message });
-    }
-}
+//     } catch (error) {
+//         console.log(error.message);
+//         res.json({ success: false, message: error.message });
+//     }
+// }
 
-const razorpayInstance = new razorpay({
+// const razorpayInstance = new razorpay({
     
-})
+// })
 
 
 export { clerkWebhook, userCredits };
