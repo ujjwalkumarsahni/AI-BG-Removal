@@ -4,19 +4,19 @@ import { assets } from '../assets/assets.js'
 import axios from 'axios'
 import { toast } from 'react-toastify'
 import { useClerk, UserButton, useUser } from '@clerk/clerk-react'
-import { AppContext } from '../context/AppContext.jsx'
+// import { AppContext } from '../context/AppContext.jsx'
 
 const Navbar = () => {
   const { openSignIn } = useClerk()
   const { isSignedIn, user } = useUser()
-  const { credit, loadCreditsData } = useContext(AppContext)
+  // const { credit, loadCreditsData } = useContext(AppContext)
   const navigate = useNavigate()
 
-  useEffect(() => {
-    if (isSignedIn) {
-      loadCreditsData()
-    }
-  }, [isSignedIn])
+  // useEffect(() => {
+  //   if (isSignedIn) {
+  //     loadCreditsData()
+  //   }
+  // }, [isSignedIn])
 
   return (
     <div className='w-full flex justify-between items-center p-4 sm:p-6 sm:px-24 absolute top-0 left-0'>
@@ -25,7 +25,7 @@ const Navbar = () => {
         <div className='flex items-center gap-2 sm:gap-3'>
           <button onClick={() => navigate('/buy')} className='flex items-center gap-2 bg-blue-100 px-4 sm:px-2.5 rounded-full hover:scale-105 transition-all duration-700'>
             <img className='w-5' src={assets.credit_icon} alt="" />
-            <p className='text-xs sm:text-sm font-medium text-gray-600'>Credits: {credit}</p>
+            <p className='text-xs sm:text-sm font-medium text-gray-600'>Credits: 10</p>
           </button>
           <p className='max-sm:hidden text-gray-600'>Hi, {user.fullName}</p>
           <UserButton />
