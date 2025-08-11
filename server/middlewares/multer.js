@@ -1,18 +1,3 @@
-// import multer from 'multer'
-
-// // creating multer middlewares for parsing formdata
-
-// const storage = multer.diskStorage({
-//     filename: function(re,file,callback){
-//         callback(null, `${Data.now()}_${file.originalname}`)
-//     }
-// })
-
-// const upload = multer({storage})
-
-// export default upload
-
-// middlewares/multer.js
 import multer from 'multer';
 import fs from 'fs';
 import path from 'path';
