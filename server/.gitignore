@@ -32,3 +32,6 @@ out/
 *.swp
 *.bak
 *.tmp
+
+// uploaded files
+uploads/
