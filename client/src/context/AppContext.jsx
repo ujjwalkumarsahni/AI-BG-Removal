@@ -1,88 +1,64 @@
+import { useActionState} from "react";
 import { useAuth, useClerk, useUser } from "@clerk/clerk-react";
-// import axios from "axios";
+import axios from "axios";
 import { createContext } from "react";
-// import { toast } from "react-toastify";
-// import {useNavigate} from 'react-router-dom'
+import { toast } from "react-toastify";
+
 export const AppContext = createContext();
 
 const AppContextProvider = (props) => {
+    const backendUrl = import.meta.env.VITE_BACKEND_URL;
+    const [credit, setCredit] = useState(null);
 
-    // const backendUrl = import.meta.env.VITE_BACKEND_URL;
-    // const navigate = useNavigate()
-    // const [credit, setCredit] = useState(false);
-    // const [image, setImage] = useState(false);
-    // const [resultImage, setResultImage] = useState(false);
+    const { getToken } = useAuth();
+    const { isSignedIn } = useUser();
+    const { openSignIn } = useClerk();
 
-    const {getToken} = useAuth()
-    const {isSignedIn} = useUser()
-    const {openSignIn} = useClerk()
+    const loadCreditsData = async () => {
+        if (!isSignedIn) {
+            toast.error("Please sign in to view credits");
+            return;
+        }
 
-    // const loadCreditsData = async () =>{
-    //     try {
-    //         const token = await getToken()
-    //         const {data} = await axios.get(backendUrl+'api/user/credits',{headers: {token}})
+        try {
+            // Clerk returns a signed JWT here
+            const token = await getToken();
 
-    //         if(data.success){
-    //             setCredit(data.credits)
-    //             console.log(data.credits)
-    //         }
+            const { data } = await axios.get(`${backendUrl}/api/user/credits`, {
+                headers: {
+                    Authorization: `Bearer ${token}`, 
+                },
+            });
 
-    //     } catch (error) {
-    //         toast.error(error.message)
-    //     }
-    // }
+            if (data.success) {
+                setCredit(data.credits);
+                console.log("Credits:", data.credits);
+            } else {
+                toast.error(data.message || "Failed to load credits");
+            }
+        } catch (error) {
+            console.error(error);
+            toast.error(error.response?.data?.message || error.message);
+        }
+    };
 
-    // const removeBg = async (image) =>{
-    //     try {
-    //         if(!isSignedIn){
-    //             return openSignIn()
-    //         }
-    //         setImage(image);
-    //         setResultImage(false)
-
-    //         navigate('/result')
-
-    //         const token = await getToken()
-    //         const formData = new FormData()
-    //         image && formData.append('image',image)
-
-    //         const url = `${backendUrl.replace(/\/+$/, '')}/api/image/remove-bg`;
-    //         console.log("Calling remove-bg:", url);
-
-    //         const {data} = await axios.post(`${backendUrl.replace(/\/+$/, '')}/api/image/remove-bg`,formData, {headers: {token}})
-
-    //         if(data.success){
-    //             setResultImage(data.resultImage)
-    //             data.creditBalance && setCredit(data.creditBalance)
-    //         } else{
-    //             toast.error(data.message)
-    //             data.creditBalance && setCredit(data.creditBalance)
-    //             if(data.creditBalance === 0){
-    //                 navigate('/buy')
-    //             }
-    //         }
-            
-    //     } catch (error) {
-    //         toast.error(error.message)
-    //     }
-    // }
-
-
-    // const value = {
-    //    credit, setCredit, loadCreditsData, backendUrl, image, setImage, removeBg,resultImage, setResultImage
-    // }
+    
 
     const value = {
+        credit,
+        setCredit,
+        loadCreditsData,
+        backendUrl,
         isSignedIn,
         getToken,
-        openSignIn
-    }
+        openSignIn,
+    };
 
     return (
         <AppContext.Provider value={value}>
             {props.children}
         </AppContext.Provider>
     );
-}
+};
 
 export default AppContextProvider;
