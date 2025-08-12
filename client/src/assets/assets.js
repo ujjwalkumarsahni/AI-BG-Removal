@@ -18,6 +18,16 @@ import mail_icon from './mail_icon.svg'
 import person_icon from './person_icon.svg'
 import lock_icon from './lock_icon.svg'
 
+import removeBg from './videos/remove-background.mp4'
+import removeText from './videos/remove-text.mp4'
+import reimagine from './videos/reimagine.mp4'
+
+export const videoAssets = {
+  removeBg,
+  removeText,
+  reimagine,
+}
+
 export const assets = {
     logo,
     logo_icon,
@@ -41,14 +51,14 @@ export const assets = {
 export const testimonialsData = [
     {
         id: 1,
-        text: "I've been using TrimBG for nearly two years, primarily for Instagram, and it has been incredibly user-friendly, making my work much easier.",
+        text: "I've been using ReImage for nearly two years, primarily for Instagram, and it has been incredibly user-friendly, making my work much easier.",
         author: "Richard Nelson",
         image: profile_img_1,
         jobTitle:'Web Developer'
     },
     {
         id: 2,
-        text: "I've been using TrimBG for nearly 6 months, I had a fantastic experience. The quality is top-notch. I recommend others to try this app.",
+        text: "I've been using ReImage for nearly 6 months, I had a fantastic experience. The quality is top-notch. I recommend others to try this app.",
         author: "Donald Jackman",
         image: profile_img_2,
         jobTitle:'UI Deginer'

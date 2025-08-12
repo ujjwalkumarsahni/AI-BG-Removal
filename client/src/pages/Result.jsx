@@ -3,9 +3,16 @@ import { AppContext } from "../context/AppContext.jsx";
 import { useNavigate } from "react-router-dom";
 
 const Result = () => {
+  const { resultImage, image, credit, processType } = useContext(AppContext);
+  const navigate = useNavigate();
 
-  const {resultImage,image,credit} = useContext(AppContext)
-  const navigate = useNavigate()
+  const getTitle = () => {
+    if (processType === "remove-bg") return "Background Removed";
+    if (processType === "remove-text") return "Text Removed";
+    if (processType === "reimagine") return "Reimagine";
+    return "Processed Image";
+  };
+
   return (
     <div className="mx-4 my-3 lg:mx-44 mt-20 min-h-[100vh]">
       <div className="bg-white rounded-lg px-8 py-6 drop-shadow-sm h-[100%]">
@@ -23,35 +30,36 @@ const Result = () => {
             />
           </div>
 
-          {/* Background Removed Image */}
+          {/* Processed Image */}
           <div className="flex flex-col">
-            <p className="font-semibold text-gray-600 pb-2">Background Removed</p>
+            <p className="font-semibold text-gray-600 pb-2">{getTitle()}</p>
             <div className="rounded-md border border-gray-300 h-full relative bg-layer flex items-center justify-center">
-              {/* Uncomment when image is ready */}
               <img src={resultImage ? resultImage : ""} alt="Processed" className="w-full object-cover" />
-              {/* Loader (Centered) */}
-              {
-                !resultImage && image && <div className="border-4 border-violet-600 rounded-full h-12 w-12 border-t-transparent animate-spin"></div>
-              }
+              {!resultImage && image && (
+                <div className="border-4 border-violet-600 rounded-full h-12 w-12 border-t-transparent animate-spin"></div>
+              )}
             </div>
           </div>
         </div>
 
         {/* Buttons Section */}
-        {
-          resultImage && <div className="flex justify-center gap-4 mt-6">
-          <button onClick={() => navigate('/')} className="border border-purple-600 text-purple-600 px-6 py-2 rounded-full hover:bg-purple-100 transition">
-            Try another image
-          </button>
-          <a
-            href={resultImage}
-            download
-            className="bg-gradient-to-r from-purple-500 to-blue-500 text-white px-6 py-2 rounded-full hover:opacity-90 transition"
-          >
-            Download image
-          </a>
-        </div>
-        }
+        {resultImage && (
+          <div className="flex justify-center gap-4 mt-6">
+            <button
+              onClick={() => navigate('/')}
+              className="border border-purple-600 text-purple-600 px-6 py-2 rounded-full hover:bg-purple-100 transition"
+            >
+              Try another image
+            </button>
+            <a
+              href={resultImage}
+              download
+              className="bg-gradient-to-r from-purple-500 to-blue-500 text-white px-6 py-2 rounded-full hover:opacity-90 transition"
+            >
+              Download image
+            </a>
+          </div>
+        )}
       </div>
     </div>
   );

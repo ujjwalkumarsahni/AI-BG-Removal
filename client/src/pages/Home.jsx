@@ -3,16 +3,16 @@ import Header from '../components/Header.jsx'
 import Steps from '../components/Steps.jsx'
 import BgSlider from '../components/BgSlider.jsx'
 import Testimonials from '../components/Testimonials.jsx'
-import Upload from '../components/Upload.jsx'
+import FeaturesSection from '../components/FeaturesSection.jsx'
 
 const Home = () => {
   return (
     <div>
       <Header />
+      <FeaturesSection />
       <Steps />
       <BgSlider />
       <Testimonials />
-      <Upload />
     </div>
   )
 }

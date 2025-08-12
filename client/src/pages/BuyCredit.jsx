@@ -96,7 +96,7 @@ const BuyCredit = () => {
             </p>
             <button
               onClick={() => paymentRazorpay(plan.id)}
-              className="mt-5 w-full bg-gradient-to-r from-purple-500 to-blue-500 text-white py-2 rounded-full hover:opacity-90 transition"
+              className="mt-5 w-full bg-gradient-to-r from-purple-500 to-blue-500 text-white py-2 rounded-full hover:opacity-90 transition cursor-pointer"
             >
               Purchase
             </button>

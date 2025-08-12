@@ -12,6 +12,7 @@ const AppContextProvider = (props) => {
     const [credit, setCredit] = useState(null);
     const [image, setImage] = useState(false);
     const [resultImage, setResultImage] = useState(false);
+    const [processType, setProcessType] = useState('remove-bg');
     const navigate = useNavigate();
 
     const { getToken } = useAuth();
@@ -51,6 +52,7 @@ const AppContextProvider = (props) => {
             if (!isSignedIn) {
                 return openSignIn()
             }
+            setProcessType("remove-bg");
             setImage(image);
             setResultImage(false)
 
@@ -85,8 +87,88 @@ const AppContextProvider = (props) => {
             toast.error(error.message)
         }
     }
+    const removeText = async (image) => {
+        try {
+            if (!isSignedIn) {
+                return openSignIn()
+            }
+            setProcessType("remove-text");
+            setImage(image);
+            setResultImage(false)
 
+            navigate('/result')
 
+            const token = await getToken()
+            const formData = new FormData()
+            if (image) formData.append('image', image);
+
+            const { data } = await axios.post(
+                `${backendUrl}/api/image/remove-text`,
+                formData,
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`, // ✅ send as Authorization
+                    },
+                }
+            );
+
+            if (data.success) {
+                setResultImage(data.resultImage)
+                data.creditBalance && setCredit(data.creditBalance)
+            } else {
+                toast.error(data.message)
+                data.creditBalance && setCredit(data.creditBalance)
+                if (data.creditBalance === 0) {
+                    navigate('/buy')
+                }
+            }
+
+        } catch (error) {
+            toast.error(error.message)
+        }
+    }
+    const reimagine = async (image) => {
+        try {
+            if (!isSignedIn) {
+                return openSignIn()
+            }
+            setProcessType("reimagine");
+            setImage(image);
+            setResultImage(false)
+
+            navigate('/result')
+
+            const token = await getToken()
+            const formData = new FormData()
+            if (image) formData.append('image', image);
+
+            const { data } = await axios.post(
+                `${backendUrl}/api/image/reimagine`,
+                formData,
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`, // ✅ send as Authorization
+                    },
+                }
+            );
+
+            if (data.success) {
+                setResultImage(data.resultImage)
+                data.creditBalance && setCredit(data.creditBalance)
+            } else {
+                toast.error(data.message)
+                data.creditBalance && setCredit(data.creditBalance)
+                if (data.creditBalance === 0) {
+                    navigate('/buy')
+                }
+            }
+
+        } catch (error) {
+            toast.error(error.message)
+        }
+    }
+
+    
 
     const value = {
         credit,
@@ -97,8 +179,12 @@ const AppContextProvider = (props) => {
         getToken,
         openSignIn,
         removeBg,
+        removeText,
+        reimagine,
         resultImage,
         image,
+        setProcessType,
+        processType
     };
 
     return (
