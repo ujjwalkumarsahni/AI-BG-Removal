@@ -93,10 +93,10 @@ ReImage/
 
 ## 📧 **Contact**
 
-* **Email**: [ujjwalkumar@example.com](mailto:ujjwalkumar0514@gmail.com)
-* **LinkedIn**: [linkedin.com/in/ujjwalkumar](https://linkedin.com/in/ujjwalkumarsahni)
-* **GitHub**: [github.com/ujjwalkumar](https://github.com/ujjwalkumarsahni)
-* **Twitter**: [twitter.com/ujjwalkumar](https://twitter.com/ujjwalksahni)
+* **Email**: [ujjwalkumar0514@gmail.com](mailto:ujjwalkumar0514@gmail.com)
+* **LinkedIn**: [linkedin.com/in/ujjwalkumarsahni](https://linkedin.com/in/ujjwalkumarsahni)
+* **GitHub**: [github.com/ujjwalkumarsahni](https://github.com/ujjwalkumarsahni)
+* **Twitter**: [x.com/ujjwalksahni](https://x.com/ujjwalksahni)
 
 ---
 
