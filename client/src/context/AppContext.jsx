@@ -1,9 +1,9 @@
-import { useActionState, useState } from "react";
+import { useActionState, useEffect, useState } from "react";
 import { useAuth, useClerk, useUser } from "@clerk/clerk-react";
 import axios from "axios";
 import { createContext } from "react";
 import { toast } from "react-toastify";
-import {useNavigate} from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 export const AppContext = createContext();
 
@@ -18,6 +18,25 @@ const AppContextProvider = (props) => {
     const { getToken } = useAuth();
     const { isSignedIn } = useUser();
     const { openSignIn } = useClerk();
+
+    const [darkMode, setDarkMode] = useState(false);
+
+    useEffect(() => {
+        const savedMode = localStorage.getItem('darkMode') === 'true';
+        setDarkMode(savedMode);
+    }, []);
+
+    useEffect(() => {
+        const root = window.document.documentElement; // <html> element
+
+        if (darkMode) {
+            root.classList.add('dark');
+        } else {
+            root.classList.remove('dark');
+        }
+
+        localStorage.setItem('darkMode', darkMode);
+    }, [darkMode]);
 
     const loadCreditsData = async () => {
         if (!isSignedIn) {
@@ -168,9 +187,11 @@ const AppContextProvider = (props) => {
         }
     }
 
-    
+
 
     const value = {
+        darkMode,
+        setDarkMode,
         credit,
         setCredit,
         loadCreditsData,

@@ -1,5 +1,6 @@
-import React from "react";
-import { videoAssets } from "../assets/assets";
+import React, { useContext } from "react";
+import { videoAssets } from "../assets/assets.js";
+import { AppContext } from "../context/AppContext.jsx";
 
 const features = [
   {
@@ -25,8 +26,8 @@ const features = [
   },
 ];
 
-const FeatureCard = ({ title, videoSrc, description }) => (
-  <div className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-2xl transition-all duration-300">
+const FeatureCard = ({ darkMode,title, videoSrc, description }) => (
+  <div className={`${darkMode ? ' dark:bg-gray-700' : 'bg-white'} rounded-xl shadow-md overflow-hidden hover:shadow-2xl transition-all duration-300 border-2 border-blue-600`}>
     <div className="relative w-full aspect-video">
       <video
         className="absolute inset-0 w-full h-full object-cover"
@@ -38,20 +39,22 @@ const FeatureCard = ({ title, videoSrc, description }) => (
       />
     </div>
     <div className="p-4 sm:p-6">
-      <h3 className="text-blue-600 font-semibold text-base sm:text-lg mb-2">
+      <h3 className={`${darkMode ? ' dark:text-white' : 'text-blue-600'} font-semibold text-base sm:text-lg mb-2`}>
         {title}
       </h3>
-      <p className="text-gray-700 text-xs sm:text-sm leading-relaxed">
+      <p className={`${darkMode ? ' dark:text-gray-300' : 'text-gray-700'} text-xs sm:text-sm leading-relaxed`}>
         {description}
       </p>
     </div>
   </div>
 );
 
-const FeaturesSection = () => (
+const FeaturesSection = () => {
+  const { darkMode } = useContext(AppContext);
+  return(
   <div className="px-4 sm:px-8 pt-16 sm:pt-20">
     {/* Section Title */}
-    <h2 className="text-center text-xl sm:text-3xl lg:text-4xl font-medium bg-gradient-to-r from-gray-900 to-gray-400 bg-clip-text text-transparent mb-10 sm:mb-16">
+    <h2 className={`text-center text-xl sm:text-3xl lg:text-4xl font-medium bg-gradient-to-r bg-clip-text text-transparent mb-10 sm:mb-16 ${darkMode ? ' dark:from-gray-500 dark:to-gray-100' : 'from-gray-900 to-gray-400'}`}>
       Powerful AI Tools to Transform Your Images
     </h2>
 
@@ -59,6 +62,7 @@ const FeaturesSection = () => (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 max-w-7xl mx-auto">
       {features.map(({ key, title, videoSrc, description }) => (
         <FeatureCard
+          darkMode={darkMode}
           key={key}
           title={title}
           videoSrc={videoSrc}
@@ -67,6 +71,6 @@ const FeaturesSection = () => (
       ))}
     </div>
   </div>
-);
+)};
 
 export default FeaturesSection;

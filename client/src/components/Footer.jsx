@@ -1,10 +1,12 @@
-import React from "react";
-import { assets } from "../assets/assets";
+import React, { useContext } from "react";
+import { assets } from "../assets/assets.js";
 import { Link } from "react-router-dom";
+import { AppContext } from "../context/AppContext.jsx";
 
 const Footer = () => {
+  const { darkMode } = useContext(AppContext);
   return (
-    <footer className="bg-gradient-to-r from-violet-600 to-blue-500 text-white py-10 px-6">
+    <footer className={`bg-gradient-to-r ${darkMode ? ' dark:from-gray-900 dark:to-gray-500' : 'from-violet-600 to-blue-500'} text-white py-10 px-6`}>
       <div className="max-w-7xl mx-auto">
         {/* Top Section */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-8 mb-8">

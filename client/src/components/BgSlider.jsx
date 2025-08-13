@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
-import { assets } from '../assets/assets';
+import React, { useContext, useState } from 'react';
+import { assets } from '../assets/assets.js';
+import { AppContext } from '../context/AppContext.jsx';
 
 const BgSlider = () => {
   const [sliderPosition, setSliderPosition] = useState(50);
+  const {darkMode} = useContext(AppContext);
 
   const handleSliderChange = (e) => {
     setSliderPosition(e.target.value);
@@ -10,10 +12,10 @@ const BgSlider = () => {
 
   return ( 
     <div className='pb-10 md:py-10 mx-2'>
-      <h1 className='mb-12 sm:mb-20 text-center text-2xl md:text-3xl lg:text-4xl mt-4 font-medium bg-gradient-to-r from-gray-900 to-gray-400 bg-clip-text text-transparent'>
+      <h1 className={`mb-12 sm:mb-20 text-center text-2xl md:text-3xl lg:text-4xl mt-4 font-medium bg-gradient-to-r ${darkMode ? ' dark:from-gray-500 dark:to-gray-100' : 'from-gray-900 to-gray-400'} bg-clip-text text-transparent `}>
         Remove Background With High <br />Quality and Accuracy
       </h1>
-      <div className='relative w-full max-w-3xl overflow-hidden mx-auto rounded-xl'>
+      <div className='relative w-full max-w-3xl overflow-hidden mx-auto rounded-xl border-2 border-blue-600 shadow-lg'>
         
         <img 
           src={assets.image_w_bg} 

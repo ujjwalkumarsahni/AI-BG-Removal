@@ -7,7 +7,7 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 
 const BuyCredit = () => {
-  const { backendUrl, loadCreditsData } = useContext(AppContext);
+  const { backendUrl, loadCreditsData,darkMode } = useContext(AppContext);
   const navigate = useNavigate();
   const { getToken, userId } = useAuth();
 
@@ -74,11 +74,11 @@ const BuyCredit = () => {
   };
 
   return (
-    <div className='min-h-[80vh] text-center pt-14 mb-10 bg-gradient-to-b from-gray-100 to-white px-4'>
+    <div className={`min-h-[80vh] text-center pt-14 bg-gradient-to-b  px-4 ${darkMode ? ' dark:bg-gray-800 dark:text-gray-100' : ' from-gray-100 to-white'}`}>
       <button className="text-purple-600 border border-purple-600 px-6 py-2 rounded-full mb-4 hover:bg-purple-100 transition">
         Our Plans
       </button>
-      <h1 className="text-3xl md:text-4xl font-semibold text-gray-800">
+      <h1 className={`text-3xl md:text-4xl font-semibold ${darkMode ? ' dark:text-gray-400' : ' text-gray-800'} text-gray-800`}>
         Choose the plan that’s right for you
       </h1>
 
@@ -86,13 +86,13 @@ const BuyCredit = () => {
         {plans.map((plan, index) => (
           <div
             key={index}
-            className="p-6 bg-white rounded-xl shadow-md hover:scale-105 transition duration-300 border border-gray-200"
+            className={`p-6 rounded-xl shadow-md hover:scale-105 transition duration-300 border border-gray-200 ${darkMode ? ' dark:bg-gray-700' : 'bg-white'}`}
           >
             <img width={40} src={assets.logo_icon} alt="Plan Icon" className="mx-auto mb-4" />
-            <p className="text-lg font-medium text-gray-700">{plan.id}</p>
-            <p className="text-sm text-gray-500 mt-2">{plan.desc}</p>
-            <p className="mt-4 text-xl font-semibold text-gray-800">
-              <span className="text-purple-600">₹{plan.price}</span> / {plan.credits} Credits
+            <p className={`text-lg font-medium ${darkMode ? ' dark:text-gray-100' : 'text-gray-700'}`}>{plan.id}</p>
+            <p className={`text-sm ${darkMode ? ' dark:text-gray-300' : 'text-gray-500'} mt-2`}>{plan.desc}</p>
+            <p className={`mt-4 text-xl font-semibold ${darkMode ? ' dark:text-gray-300' : 'text-gray-800'}`}>
+              <span className={`${darkMode ? ' dark:text-blue-600' : 'text-purple-700'}`}>₹{plan.price}</span> / {plan.credits} Credits
             </p>
             <button
               onClick={() => paymentRazorpay(plan.id)}
