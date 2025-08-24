@@ -182,6 +182,57 @@ const reimagine = async (req, res) => {
   }
 };
 
+const textToimage = async (req,res) =>{
+  try {
+    const {prompt} = req.body
+    const clerkId = req.clerkId;
 
+    const user = await userModel.findOne({ clerkId });
 
-export { removeBgImage,removeText ,reimagine};
+    if (!user || !prompt) {
+      return res.json({ success: false, message: 'User not found' });
+    }
+
+    if (user.creditBalance === 0) {
+      return res.json({ success: false, message: 'No credit balance', creditBalance: user.creditBalance });
+    }
+
+    const formData = new FormData()
+    formData.append('prompt', prompt)
+    const {data} = await axios.post('https://clipdrop-api.co/text-to-image/v1', 
+      formData,
+      {
+        headers: {
+          'x-api-key': process.env.CLIPDROP_API
+        },
+        responseType: 'arraybuffer',
+      }
+    )
+
+    const base64Image = Buffer.from(data, 'binary').toString('base64');
+    const resultImage = `data:image/png;base64,${base64Image}`;
+
+    // Update user credits
+    const updatedUser = await userModel.findByIdAndUpdate(
+      user._id,
+      { creditBalance: user.creditBalance - 1 },
+      { new: true }
+    );
+
+    // Delete the uploaded file to clean up
+    // fs.unlinkSync(imagePath);
+
+    res.json({
+      success: true,
+      resultImage,
+      creditBalance: updatedUser.creditBalance,
+      message: 'TextToimage',
+    });
+
+  } catch (error) {
+    console.error('Error texttoimage:', error.message);
+    res.status(500).json({ success: false, message: error.message });
+  }
+}
+
+export { removeBgImage,removeText ,reimagine, textToimage};

@@ -187,7 +187,41 @@ const AppContextProvider = (props) => {
         }
     }
 
+    const textToimage = async (prompt) => {
+        try {
+            if (!isSignedIn) {
+                return openSignIn()
+            }
+            setProcessType("TextToImage");
+            setResultImage(false)
+            navigate('/result')
 
+            const token = await getToken()
+            const { data } = await axios.post(
+                `${backendUrl}/api/image/text-to-image`,
+                {prompt},
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`, // ✅ send as Authorization
+                    },
+                }
+            );
+
+            if (data.success) {
+                setResultImage(data.resultImage)
+                data.creditBalance && setCredit(data.creditBalance)
+            } else {
+                toast.error(data.message)
+                data.creditBalance && setCredit(data.creditBalance)
+                if (data.creditBalance === 0) {
+                    navigate('/buy')
+                }
+            }
+
+        } catch (error) {
+            toast.error(error.message)
+        }
+    }
 
     const value = {
         darkMode,
@@ -202,6 +236,7 @@ const AppContextProvider = (props) => {
         removeBg,
         removeText,
         reimagine,
+        textToimage,
         resultImage,
         image,
         setProcessType,
