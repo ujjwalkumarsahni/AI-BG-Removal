@@ -7,7 +7,7 @@
 ![Made by](https://img.shields.io/badge/made%20by-Ujjwal%20Kumar-red)
 
 
-ReImage is a modern web application that allows users to **remove backgrounds**, **erase text within images**, and **reimagine images** with ease. Built with a powerful frontend, secure backend, and hosted seamlessly on Render, ReImage aims to make image editing quick, efficient, and accessible for everyone.
+ReImage is a modern web application that allows users to **remove backgrounds**, **erase text within images**, **reimagine images** and **Text to Image** with ease. Built with a powerful frontend, secure backend, and hosted seamlessly on Render, ReImage aims to make image editing quick, efficient, and accessible for everyone.
 
 ---
 
@@ -19,6 +19,7 @@ ReImage is a modern web application that allows users to **remove backgrounds**,
 * 🖼 **Remove Background** – Cleanly extract subjects from their backgrounds.
 * ✏ **Remove Text Within Images** – Erase unwanted text while preserving surrounding details.
 * 🎨 **Reimagine Images** – Transform images creatively with AI-powered enhancements.
+* 🧠 **Text to Image** – Generate stunning images instantly from simple text prompts using AI.
 
 ---
 
@@ -32,7 +33,9 @@ ReImage is a modern web application that allows users to **remove backgrounds**,
 
 - **Routing**: React Router DOM  
 - **API Calls**: Axios  
-- **Notifications**: React Toastify, emailjs.com  
+- **Notifications**: React Toastify, emailjs.com
+- **AI Image Generation**: ClipDrop API (Text-to-Image, Reimagine, Remove Background/Text)
+
 
 ### **Backend**
 ![Node.js](https://img.shields.io/badge/Node.js-20.x-43853D?logo=node.js)
