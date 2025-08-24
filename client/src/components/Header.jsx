@@ -80,7 +80,7 @@ const Header = () => {
               type="text"
               value={prompt}
               onChange={(e) => setPrompt(e.target.value)}
-              placeholder="Enter your prompt..."
+              placeholder="Enter your prompt... like generate cat"
               className="w-full border rounded-lg px-3 py-2 mb-2"
             />
             <button

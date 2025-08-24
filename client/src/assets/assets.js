@@ -21,11 +21,14 @@ import lock_icon from './lock_icon.svg'
 import removeBg from './videos/remove-background.mp4'
 import removeText from './videos/remove-text.mp4'
 import reimagine from './videos/reimagine.mp4'
+import textToImage from './videos/textToImage.mp4'
+
 
 export const videoAssets = {
   removeBg,
   removeText,
   reimagine,
+  textToImage
 }
 
 export const assets = {
